@@ -3,24 +3,35 @@ import Image from "next/image";
 import { Envelope, Handset, MapPin, ArrowRight } from "@gravity-ui/icons";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import type { IconType } from "react-icons";
 
-export default function Footer() {
-  const year = new Date().getFullYear();
+type SocialLink = {
+  icon: IconType;
+  href: string;
+};
 
-  const socials = [
+type FooterLink = {
+  label: string;
+  href: string;
+};
+
+export default function Footer(): React.JSX.Element {
+  const year: number = new Date().getFullYear();
+
+  const socials: SocialLink[] = [
     { icon: FaFacebook, href: "https://facebook.com" },
     { icon: FaInstagram, href: "https://instagram.com" },
     { icon: FaSquareXTwitter, href: "https://twitter.com" },
   ];
 
-  const quickLinks = [
+  const quickLinks: FooterLink[] = [
     { label: "Home", href: "/" },
     { label: "Explore Crafts", href: "/explore" },
     { label: "Add Craft", href: "/items/add" },
     { label: "Dashboard", href: "/dashboard" },
   ];
 
-  const companyLinks = [
+  const companyLinks: FooterLink[] = [
     { label: "About", href: "/about" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
@@ -77,7 +88,7 @@ export default function Footer() {
               Nakshi Kantha, bamboo crafts, pottery, jewelry — all in one place.
             </p>
             <div className="flex items-center gap-3 mt-1">
-              {socials.map(({ icon: Icon, href }, i) => (
+              {socials.map(({ icon: Icon, href }: SocialLink, i: number) => (
                 <Link
                   key={i}
                   href={href}
@@ -93,7 +104,7 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-bold text-zinc-100 mb-5 uppercase tracking-wider">Quick Links</h3>
             <ul className="flex flex-col gap-3.5">
-              {quickLinks.map((item) => (
+              {quickLinks.map((item: FooterLink) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -109,7 +120,7 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-bold text-zinc-100 mb-5 uppercase tracking-wider">Company</h3>
             <ul className="flex flex-col gap-3.5">
-              {companyLinks.map((item) => (
+              {companyLinks.map((item: FooterLink) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
