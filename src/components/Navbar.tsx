@@ -35,7 +35,7 @@ export default function Navbar() {
               className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               priority
             />
-            <span className="text-2xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(74,79,207,0.35)]">
+            <span className="text-2xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#887ad1] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(74,79,207,0.35)]">
               Karushala
             </span>
           </Link>
@@ -68,7 +68,7 @@ export default function Navbar() {
             
             <Link
               href="/register"
-              className="bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] hover:opacity-90 text-zinc-950 font-bold text-sm rounded-lg px-4 py-2 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95 whitespace-nowrap"
+              className="bg-linear-to-r from-[#4A4FCF] to-[#887ad1] hover:opacity-90 text-zinc-950 font-bold text-sm rounded-lg px-4 py-2 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95 whitespace-nowrap"
             >
               Get Started
             </Link>
@@ -77,7 +77,7 @@ export default function Navbar() {
           
           <button
             onClick={() => setOpen(!open)}
-            className="relative flex flex-col items-center justify-center size-9 md:hidden text-zinc-400 hover:text-[#B8AEEA] rounded-md hover:bg-zinc-900 transition-all focus:outline-none"
+            className="relative flex flex-col items-center justify-center size-9 md:hidden text-zinc-400 hover:text-[#887ad1] rounded-md hover:bg-zinc-900 transition-all focus:outline-none"
           >
             <div className="relative size-5 flex flex-col justify-center items-center">
               <span
@@ -109,7 +109,7 @@ export default function Navbar() {
               <Link
                 key={index}
                 href={item.href}
-                className="text-xl font-medium text-zinc-200 hover:text-[#B8AEEA] transition-colors"
+                className="text-xl font-medium text-zinc-200 hover:text-[#887ad1] transition-colors"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
@@ -120,14 +120,14 @@ export default function Navbar() {
             <div className="flex flex-col gap-3 mt-4 border-t border-zinc-800 pt-6">
               <Link
                 href="/login"
-                className="w-full text-center text-zinc-300 hover:text-[#B8AEEA] font-semibold text-base py-2 transition-colors"
+                className="w-full text-center text-zinc-300 hover:text-[#887ad1] font-semibold text-base py-2 transition-colors"
                 onClick={() => setOpen(false)}
               >
                 Login
               </Link>
               <Link
                 href="/register"
-                className="w-full text-center bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] text-zinc-950 font-bold text-base rounded-lg py-2.5 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95"
+                className="w-full text-center bg-linear-to-r from-[#4A4FCF] to-[#887ad1] text-zinc-950 font-bold text-base rounded-lg py-2.5 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95"
                 onClick={() => setOpen(false)}
               >
                 Get Started
