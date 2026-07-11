@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Eye, EyeOff, ArrowRightToLine, Mail, Lock, User } from "lucide-react";
 import { FaGoogle, FaPalette, FaGem, FaShop } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const signInSchema = z.object({
   email: z.string().min(1, "Email required").email("Enter valid email"),
@@ -136,17 +138,30 @@ function SignInForm({ onSwitch }: { onSwitch: () => void }) {
     defaultValues: { rememberMe: false },
   });
 
-  const onSubmit = async (data: SignInFormData) => {
+  const onSubmit = async (formdata: SignInFormData) => {
     setIsSubmitting(true);
+    console.log("Sign in payload:", formdata);
     try {
-      console.log("Sign in payload:", data);
+      const {data, error} = await authClient.signIn.email({
+        email: formdata.email,
+        password: formdata.password
+      })
       await new Promise((resolve) => setTimeout(resolve, 800)); // simulate network
+      if(data){
+        toast.success("Logged in successfully!")
+      }
+
+      if(error){
+        toast.error(error.message || "Registration failed. Please try again.");
+      return;
+      }
 
     reset();
       router.push("/");
       // TODO: Better Auth sign-in integration
     } catch (err) {
       console.error(err);
+    toast.error("Something went wrong. Please try again.");
       // TODO: error toast/message
     } finally {
       setIsSubmitting(false);
@@ -275,22 +290,35 @@ function SignUpForm({ onSwitch }: { onSwitch: () => void }) {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
-    setIsSubmitting(true);
-    try {
-      console.log("Sign up payload:", data);
-       await new Promise((resolve) => setTimeout(resolve, 800)); 
+  const onSubmit = async (formData: SignUpFormData) => {
+  setIsSubmitting(true);
+  try {
+    const { data, error } = await authClient.signUp.email({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if(data){
+      toast.success("Account created successfully!")
+    }
+
+    if (error) {
+      toast.error(error.message || "Registration failed. Please try again.");
+      return;
+    }
 
     reset();
-      onSwitch();
-      // TODO: Better Auth sign-up integration
-    } catch (err) {
+    onSwitch();
+    // signin form e router.push("/") ache, eikhane nai — 
+    // check koro emailVerification required kina, na hole redirect add koro
+  } catch (err) {
     console.error(err);
-    // TODO: error toast/message
+    toast.error("Something went wrong. Please try again.");
   } finally {
-      setIsSubmitting(false);
-    }
-  };
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="w-full max-w-[380px]">
