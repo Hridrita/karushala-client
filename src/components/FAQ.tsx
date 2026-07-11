@@ -49,8 +49,22 @@ export default function FAQ() {
   };
 
   return (
-    <section className="w-full bg-zinc-950 py-20 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl">
+    <section className="relative w-full overflow-hidden bg-zinc-950 py-20 px-4 sm:px-6 lg:px-8">
+      {/* glow blobs */}
+      <div className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-[#4A4FCF]/20 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-[#B8AEEA]/10 blur-[120px]" />
+
+      {/* subtle grid pattern */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-3xl">
         <div className="text-center mb-14">
           <span className="text-sm font-semibold uppercase tracking-widest text-[#887ad1]">
             Support
