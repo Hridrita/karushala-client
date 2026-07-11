@@ -59,15 +59,10 @@ export default function Navbar() {
           
           
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-zinc-300 hover:text-[#887ad1] font-semibold text-sm px-2 py-2 transition-colors"
-            >
-              Login
-            </Link>
+          
             
             <Link
-              href="/register"
+              href="/auth/auth_page"
               className="bg-linear-to-r from-[#4A4FCF] to-[#887ad1] hover:opacity-90 text-zinc-950 font-bold text-sm rounded-lg px-4 py-2 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95 whitespace-nowrap"
             >
               Get Started
@@ -118,15 +113,9 @@ export default function Navbar() {
             
             
             <div className="flex flex-col gap-3 mt-4 border-t border-zinc-800 pt-6">
+              
               <Link
-                href="/login"
-                className="w-full text-center text-zinc-300 hover:text-[#887ad1] font-semibold text-base py-2 transition-colors"
-                onClick={() => setOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
+                href="/auth/auth_page"
                 className="w-full text-center bg-linear-to-r from-[#4A4FCF] to-[#887ad1] text-zinc-950 font-bold text-base rounded-lg py-2.5 shadow-[0_4px_20px_rgba(74,79,207,0.25)] transition-all active:scale-95"
                 onClick={() => setOpen(false)}
               >
