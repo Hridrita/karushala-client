@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const craftImages = [
   { src: "/assest/Nakshi Kantha with women.jpg", alt: "Nakshi Kantha embroidery" },
@@ -73,11 +74,13 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
-            <button className="rounded-lg bg-gradient-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:opacity-90 active:scale-95">
+            <Link href={"/all-craft"}>
+            <button className="rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:opacity-90 active:scale-95">
               Explore Crafts
             </button>
+            </Link>
             <button className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-6 py-3 text-sm font-bold text-zinc-200 transition-all hover:border-[#887ad1]/50 hover:text-[#B8AEEA] active:scale-95">
-              Become a Seller
+              Become a Artisan
             </button>
           </motion.div>
 

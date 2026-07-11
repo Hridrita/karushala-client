@@ -20,11 +20,10 @@ export default function Navbar() {
   
   const navLinks: NavItem[] = [
     { label: "Home", href: "/" },
-    { label: "Explore Crafts", href: "/explore" },
     ...(session?.user
       ? [
-          { label: "Add Craft", href: "/items/add" },
-          { label: "Manage Store", href: "/items/manage" },
+          { label: "Add Craft", href: "/add-craft" },
+          { label: "Manage Store", href: "/manage-crafts" },
           { label: "Dashboard", href: "/dashboard" },
         ]
       : []),
