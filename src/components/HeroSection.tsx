@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const craftImages = [
-  { src: "/assest/Nakshi Kantha with women.jpg", alt: "Nakshi Kantha embroidery" },
-  { src: "/assest/pot.jpg", alt: "Handmade pottery" },
-  { src: "/assest/matir pots.jpg", alt: "Handmade pottery" },
-  { src: "/assest/jwellery.png", alt: "Handmade jewelry" },
+  { src: "/assest/hero/Nakshi Kantha with women.jpg", alt: "Nakshi Kantha embroidery" },
+  { src: "/assest/hero/pot.jpg", alt: "Handmade pottery" },
+  { src: "/assest/hero/matir pots.jpg", alt: "Handmade pottery" },
+  { src: "/assest/hero/jwellery.png", alt: "Handmade jewelry" },
 ];
 
 const container = {
@@ -34,6 +36,17 @@ const cardVariants = {
 };
 
 export default function HeroSection() {
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
+
+  const handleBecomeArtisan = () => {
+    if (session?.user) {
+      router.push("/add-craft");
+    } else {
+      router.push("/auth/auth_page?callbackUrl=/add-craft");
+    }
+  };
+
   return (
     <section className="relative overflow-hidden bg-zinc-950 min-h-screen flex items-center">
       {/* ambient glow blobs */}
@@ -75,11 +88,14 @@ export default function HeroSection() {
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
             <Link href={"/all-craft"}>
-            <button className="rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:opacity-90 active:scale-95">
-              Explore Crafts
-            </button>
+              <button className="rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:opacity-90 active:scale-95">
+                Explore Crafts
+              </button>
             </Link>
-            <button className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-6 py-3 text-sm font-bold text-zinc-200 transition-all hover:border-[#887ad1]/50 hover:text-[#B8AEEA] active:scale-95">
+            <button
+              onClick={handleBecomeArtisan}
+              className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-6 py-3 text-sm font-bold text-zinc-200 transition-all hover:border-[#887ad1]/50 hover:text-[#B8AEEA] active:scale-95"
+            >
               Become a Artisan
             </button>
           </motion.div>

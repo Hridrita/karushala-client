@@ -5,10 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { House, FolderPlus } from "@gravity-ui/icons";
+import { LayoutDashboard, SquareLibrary } from "lucide-react";
 
 type NavItem = {
   label: string;
   href: string;
+  icon: React.ComponentType<{ className?: string }>;
 };
 
 export default function Navbar() {
@@ -17,14 +20,13 @@ export default function Navbar() {
   const { data: session } = authClient.useSession();
   const firstName = session?.user?.name?.split(" ")[0];
 
-  
   const navLinks: NavItem[] = [
-    { label: "Home", href: "/" },
+    { label: "Home", href: "/", icon: House },
     ...(session?.user
       ? [
-          { label: "Add Craft", href: "/add-craft" },
-          { label: "Manage Store", href: "/manage-crafts" },
-          { label: "Dashboard", href: "/dashboard" },
+          { label: "Add Craft", href: "/add-craft", icon: FolderPlus },
+          { label: "Manage Store", href: "/manage-crafts", icon: SquareLibrary },
+          { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
         ]
       : []),
   ];
@@ -60,16 +62,22 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="text-sm font-medium text-zinc-300 hover:text-[#887ad1] transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-15">
+          {navLinks.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={index}
+                href={item.href}
+                className="relative group/nav flex items-center justify-center text-zinc-300 hover:text-[#887ad1] transition-colors"
+              >
+                <Icon className="size-6" />
+                <span className="pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-200 opacity-0 scale-95 group-hover/nav:opacity-100 group-hover/nav:scale-100 transition-all duration-150 shadow-lg border border-zinc-700">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -120,16 +128,20 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden absolute top-16 left-0 w-full h-[calc(100vh-4rem)] bg-zinc-950/95 backdrop-blur-lg border-t border-zinc-800 p-6 shadow-2xl transition-all animate-in fade-in slide-in-from-top-5 duration-200">
           <div className="flex flex-col gap-6 h-full overflow-y-auto pb-10">
-            {navLinks.map((item, index) => (
-              <Link
-                key={index}
-                href={item.href}
-                className="text-xl font-medium text-zinc-200 hover:text-[#887ad1] transition-colors"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="flex items-center gap-3 text-xl font-medium text-zinc-200 hover:text-[#887ad1] transition-colors"
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon className="size-5" />
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <div className="flex flex-col gap-3 mt-4 border-t border-zinc-800 pt-6">
               {session?.user ? (
