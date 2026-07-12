@@ -150,6 +150,7 @@ const AddCraftPage = () => {
         price: Number(data.price),
         stock: Number(data.stock),
         images: uploadedUrls,
+        sellerEmail: session?.user?.email
       };
 
       console.log("payload data:",payload);
