@@ -26,7 +26,7 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/${id}`,
-    { cache: "no-store" }
+    { cache: "no-store" },
   );
   const craft: Craft = await res.json();
 
@@ -34,11 +34,17 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
   if (craft?.category) {
     const relRes = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts?category=${craft.category}`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
     const relData: Craft[] = await relRes.json();
     related = relData.filter((c) => c._id !== id).slice(0, 4);
   }
+
+  const reviewsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/${id}/reviews`,
+    { cache: "no-store" },
+  );
+  const reviews = await reviewsRes.json();
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-zinc-950 py-16">
@@ -112,7 +118,7 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
         </div>
 
         {/* Reviews */}
-        <ReviewsSection craftId={id} initialReviews={craft.reviews || []}></ReviewsSection>
+        <ReviewsSection craftId={id} initialReviews={reviews}></ReviewsSection>
 
         {/* Related items */}
         {related.length > 0 && (
