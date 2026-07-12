@@ -96,7 +96,7 @@ export default function HeroSection() {
               onClick={handleBecomeArtisan}
               className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-6 py-3 text-sm font-bold text-zinc-200 transition-all hover:border-[#887ad1]/50 hover:text-[#B8AEEA] active:scale-95"
             >
-              Become a Artisan
+              Become an Artisan
             </button>
           </motion.div>
 

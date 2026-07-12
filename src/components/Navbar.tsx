@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { House, FolderPlus } from "@gravity-ui/icons";
+import { House, FolderPlus, Wallet } from "@gravity-ui/icons";
 import { LayoutDashboard, SquareLibrary } from "lucide-react";
 
 type NavItem = {
@@ -22,6 +22,7 @@ export default function Navbar() {
 
   const navLinks: NavItem[] = [
     { label: "Home", href: "/", icon: House },
+    { label: "All Craft", href: "/all-craft", icon: Wallet},
     ...(session?.user
       ? [
           { label: "Add Craft", href: "/add-craft", icon: FolderPlus },
