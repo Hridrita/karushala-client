@@ -169,11 +169,12 @@ const AddCraftPage = () => {
         console.log(resData.message);
         toast.error("Failed to add craft");
       }
+      toast.success("New craft added successfully!")
 
       reset(); 
       setImageFiles([]); 
       setPreviews([]);
-      router.push("/all-craft");
+    //   router.push("/all-craft");
     } catch (err: any) {
       toast.error(err.message || "Something went wrong");
     } finally {
