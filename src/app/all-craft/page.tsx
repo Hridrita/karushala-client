@@ -54,22 +54,22 @@ const AllCraftsPage = async () => {
                 <h3 className="line-clamp-1 text-sm font-bold text-white">
                   {craft.title}
                 </h3>
-                <p className="mt-1 line-clamp-2 text-xs text-zinc-400">
-                  {craft.description}
+                <p className="mt-1 text-xs text-zinc-400">
+                  {craft.rating ? `★ ${craft.rating.toFixed(1)}` : "No ratings yet"}
                 </p>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
                   <span className="font-semibold text-[#B8AEEA]">
-                    ৳{craft.price}
+                    Tk {craft.price}
                   </span>
                   <span>•</span>
                   <span>{craft.district}</span>
-                  {craft.rating && (
+                  {/* {craft.rating && (
                     <>
                       <span>•</span>
                       <span>★ {craft.rating}</span>
                     </>
-                  )}
+                  )} */}
                   {craft.createdAt && (
                     <>
                       <span>•</span>

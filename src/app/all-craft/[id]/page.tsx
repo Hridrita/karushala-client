@@ -1,4 +1,5 @@
 import CraftGallery from "@/components/CraftGallery";
+import ReviewsSection from "@/components/ReviewsSection";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -111,34 +112,7 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
         </div>
 
         {/* Reviews */}
-        <div className="mt-10 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-6 sm:p-8">
-          <h2 className="text-lg font-bold text-white">Reviews & Ratings</h2>
-
-          {craft.reviews && craft.reviews.length > 0 ? (
-            <div className="mt-5 space-y-4">
-              {craft.reviews.map((rev, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg border border-zinc-800 bg-zinc-950/40 p-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-zinc-200">
-                      {rev.name}
-                    </p>
-                    <span className="text-xs text-[#B8AEEA]">
-                      ★ {rev.rating}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-xs text-zinc-400">{rev.comment}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="mt-4 text-sm text-zinc-500">
-              No reviews yet for this craft.
-            </p>
-          )}
-        </div>
+        <ReviewsSection craftId={id} initialReviews={craft.reviews || []}></ReviewsSection>
 
         {/* Related items */}
         {related.length > 0 && (
