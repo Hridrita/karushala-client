@@ -3,8 +3,8 @@ import { getSessionCookie } from "better-auth/cookies";
 
 const protectedRoutes = [
   "/dashboard",
-  "/items/add",
-  "/items/manage",
+  "/add-craft",
+  "/manage-crafts",
 ];
 
 export async function proxy(request: NextRequest) {
@@ -30,5 +30,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/add-craft", "/manage-crafts"],
+  matcher: ["/dashboard","/dashboard/:path*", "/add-craft", "/manage-crafts","/manage-crafts/:path*"],
 };
