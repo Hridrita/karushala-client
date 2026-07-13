@@ -9,7 +9,14 @@ const CraftGallery = ({ images, title }: { images: string[]; title: string }) =>
   return (
     <div>
       <div className="relative h-80 w-full overflow-hidden rounded-2xl border border-zinc-800/80 sm:h-[420px]">
-        <Image src={activeImg} alt={title} fill className="object-cover" />
+        <Image
+          src={activeImg}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+          priority
+        />
       </div>
       {images?.length > 1 && (
         <div className="mt-3 grid grid-cols-4 gap-3">
@@ -28,6 +35,7 @@ const CraftGallery = ({ images, title }: { images: string[]; title: string }) =>
                 src={img}
                 alt={`${title}-${i}`}
                 fill
+                sizes="150px"
                 className="object-cover"
               />
             </button>
