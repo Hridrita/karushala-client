@@ -2,6 +2,14 @@
 
 import { useState } from "react";
 import { ChevronDown } from "@gravity-ui/icons";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 type FAQItem = {
   question: string;
@@ -49,7 +57,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-zinc-950 py-20 px-4 sm:px-6 lg:px-8">
+    <section className={`${fraunces.variable} relative w-full overflow-hidden bg-zinc-950 py-20 px-4 sm:px-6 lg:px-8`}>
       {/* glow blobs */}
       <div className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-[#4A4FCF]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-[#B8AEEA]/10 blur-[120px]" />
@@ -69,7 +77,10 @@ export default function FAQ() {
           <span className="text-sm font-semibold uppercase tracking-widest text-[#887ad1]">
             Support
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent">
+          <h2
+            style={{ fontFamily: "var(--font-fraunces)" }}
+            className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent"
+          >
             Frequently Asked Questions
           </h2>
           <p className="mt-3 text-zinc-400 max-w-xl mx-auto">

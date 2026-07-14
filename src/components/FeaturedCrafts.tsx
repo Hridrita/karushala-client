@@ -5,6 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, ShoppingBag, Heart, Eye, MapPin } from "lucide-react";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 interface Craft {
   _id: string;
@@ -41,7 +49,7 @@ export default function FeaturedCrafts() {
 
   useEffect(() => {
     setIsClient(true);
-    
+
     const fetchFeaturedCrafts = async () => {
       try {
         const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -60,10 +68,10 @@ export default function FeaturedCrafts() {
     fetchFeaturedCrafts();
   }, []);
 
-  // ✅ Hydration fix: client-side rendering না হওয়া পর্যন্ত loading দেখান
+  // ✅ Hydration fix: client-side rendering না হওয়া পর্যন্ত loading দেখান
   if (!isClient) {
     return (
-      <section className="relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8">
+      <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 4 }).map((_, index) => (
@@ -90,7 +98,7 @@ export default function FeaturedCrafts() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8">
+    <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8`}>
       {/* Ambient Glow Effects */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-[#4A4FCF]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-20 h-[24rem] w-[24rem] rounded-full bg-[#B8AEEA]/15 blur-[110px]" />
@@ -104,11 +112,13 @@ export default function FeaturedCrafts() {
               <span className="rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-1.5 text-xs font-semibold tracking-wide text-[#B8AEEA] backdrop-blur-sm">
                  Handpicked Masterpieces
               </span>
-              
             </div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h2
+              style={{ fontFamily: "var(--font-fraunces)" }}
+              className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
+            >
               Featured{" "}
-              <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent italic">
                 Craft Collections
               </span>
             </h2>
@@ -181,10 +191,10 @@ export default function FeaturedCrafts() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    
+
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-zinc-950/20 to-transparent" />
-                    
+
                     {/* Top Badges */}
                     <div className="absolute top-3 left-3 right-3 flex items-start justify-between">
                       {craft.district && (
@@ -193,7 +203,7 @@ export default function FeaturedCrafts() {
                           {craft.district}
                         </div>
                       )}
-                      
+
                       <div className="flex items-center gap-1 rounded-full bg-zinc-950/70 backdrop-blur-sm px-2.5 py-1 text-[10px] font-medium text-zinc-300 border border-zinc-800/50">
                         <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                         <span>{displayRating}</span>
@@ -219,10 +229,13 @@ export default function FeaturedCrafts() {
                   {/* Content */}
                   <div className="flex flex-col flex-1 p-4 pt-3">
                     <div className="flex-1">
-                      <h3 className="line-clamp-1 text-base font-bold text-white group-hover:text-[#B8AEEA] transition-colors duration-300">
+                      <h3
+                        style={{ fontFamily: "var(--font-fraunces)" }}
+                        className="line-clamp-1 text-base font-semibold text-white group-hover:text-[#B8AEEA] transition-colors duration-300"
+                      >
                         {craft.title}
                       </h3>
-                      
+
                       <div className="mt-1.5 flex items-center gap-2 text-xs text-zinc-500">
                         {craft.stock && craft.stock > 0 ? (
                           <>
@@ -239,7 +252,10 @@ export default function FeaturedCrafts() {
                     <div className="mt-4 flex items-center justify-between pt-3 border-t border-zinc-800/50">
                       <div>
                         <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-medium">Price</span>
-                        <p className="text-xl font-extrabold text-white leading-tight">
+                        <p
+                          style={{ fontFamily: "var(--font-fraunces)" }}
+                          className="text-xl font-semibold text-white leading-tight"
+                        >
                           ৳{craft.price}
                         </p>
                       </div>
@@ -274,7 +290,9 @@ export default function FeaturedCrafts() {
           >
             <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-12">
               <div className="text-5xl mb-4">🎨</div>
-              <h3 className="text-xl font-bold text-white">No crafts available yet</h3>
+              <h3 style={{ fontFamily: "var(--font-fraunces)" }} className="text-xl font-semibold text-white">
+                No crafts available yet
+              </h3>
               <p className="text-sm text-zinc-400 mt-2 max-w-md mx-auto">
                 Be the first to showcase your masterpiece. Start crafting today!
               </p>

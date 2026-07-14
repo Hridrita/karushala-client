@@ -10,6 +10,9 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedCrafts from "@/components/FeaturedCrafts";
 import OurImpact from "@/components/OurImpact";
 import CustomerTestimonials from "@/components/CustomerTestimonials";
+import Newsletter from "@/components/Newsletter";
+import BehindTheCraft from "@/components/BehindTheCraft";
+import TheKarunshalaWay from "@/components/TheKarushalaWay";
 
 export default function Home() {
   const { user } = useAuth();
@@ -63,8 +66,10 @@ export default function Home() {
       <HeroSection />
       <Categories />
       <FeaturedCrafts></FeaturedCrafts>
+      <TheKarunshalaWay></TheKarunshalaWay>
       <OurImpact></OurImpact>
       <CustomerTestimonials></CustomerTestimonials>
+      <BehindTheCraft></BehindTheCraft>
       <FAQ />
     </div>
   );

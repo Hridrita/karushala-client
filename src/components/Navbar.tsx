@@ -1,5 +1,3 @@
-// src/components/Navbar.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -10,12 +8,20 @@ import { useRouter } from "next/navigation";
 import { House, FolderPlus, Wallet, LayoutDashboard, SquareLibrary } from "lucide-react";
 import { isDemoUser } from "@/lib/demo-user";
 import { toast } from "sonner";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["600"],
+  style: ["italic"],
+  variable: "--font-fraunces",
+});
 
 type NavItem = {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
-  requiresAction?: boolean; // true মানে demo user করতে পারবে না
+  requiresAction?: boolean; 
 };
 
 export default function Navbar() {
@@ -61,7 +67,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
+    <header className={`${fraunces.variable} sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md`}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <div className="flex items-center">
@@ -74,7 +80,7 @@ export default function Navbar() {
               className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               priority
             />
-            <span className="text-2xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#887ad1] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(74,79,207,0.35)]">
+            <span style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#887ad1] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(74,79,207,0.35)]">
               Karushala
             </span>
           </Link>

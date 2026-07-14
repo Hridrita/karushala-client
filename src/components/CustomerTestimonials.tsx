@@ -3,6 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, Quote, Sparkles, ArrowRight, Award, Heart } from "lucide-react";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 interface Review {
   _id?: string;
@@ -39,11 +47,11 @@ export default function CustomerTestimonials() {
     const fetchReviews = async () => {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/reviews/public`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         const fetchedReviews = Array.isArray(data) ? data : data.reviewsData || [];
         setReviews(fetchedReviews.slice(0, 6));
@@ -59,12 +67,12 @@ export default function CustomerTestimonials() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8">
+    <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8`}>
       {/* ===== ENHANCED BACKGROUND EFFECTS ===== */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[40rem] w-[40rem] rounded-full bg-[#4A4FCF]/15 blur-[180px] animate-pulse" />
       <div className="pointer-events-none absolute -bottom-40 -right-20 h-[35rem] w-[35rem] rounded-full bg-[#B8AEEA]/10 blur-[160px] animate-pulse [animation-delay:2s]" />
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A4FCF]/5 blur-[130px]" />
-      
+
       {/* Floating Particles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 h-1 w-1 rounded-full bg-[#4A4FCF]/30 blur-[2px] animate-ping [animation-duration:3s]" />
@@ -85,14 +93,17 @@ export default function CustomerTestimonials() {
               Authentic
             </span>
           </div>
-          
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+
+          <h2
+            style={{ fontFamily: "var(--font-fraunces)" }}
+            className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
+          >
             What Our{" "}
-            <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent italic">
               Customers Say
             </span>
           </h2>
-          
+
           <p className="mx-auto max-w-xl text-base text-zinc-400 leading-relaxed">
             Discover how art lovers around the country feel about their unique heritage pieces and artisanal experience.
           </p>
@@ -118,7 +129,9 @@ export default function CustomerTestimonials() {
           <div className="mt-16 text-center">
             <div className="inline-block rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-8">
               <div className="text-5xl mb-4">💬</div>
-              <h3 className="text-lg font-bold text-white">No Reviews Yet</h3>
+              <h3 style={{ fontFamily: "var(--font-fraunces)" }} className="text-lg font-semibold text-white">
+                No Reviews Yet
+              </h3>
               <p className="text-sm text-zinc-400 mt-1 max-w-md mx-auto">
                 Be the first to share your experience with our artisans
               </p>
@@ -194,9 +207,12 @@ export default function CustomerTestimonials() {
                           <Award className="h-2 w-2 text-white" />
                         </span>
                       </div>
-                      
+
                       <div>
-                        <h4 className="text-sm font-bold text-white group-hover:text-[#B8AEEA] transition-colors">
+                        <h4
+                          style={{ fontFamily: "var(--font-fraunces)" }}
+                          className="text-sm font-semibold text-white group-hover:text-[#B8AEEA] transition-colors"
+                        >
                           {review.name}
                         </h4>
                         {review.craftTitle && (

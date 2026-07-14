@@ -61,6 +61,7 @@ const ProfilePage = () => {
     }
 
     const fetchProfile = async () => {
+      const {data:tokenData} = await authClient.token()
       if (isAuthenticated && user?.email) {
         try {
           const response = await fetch(
@@ -69,6 +70,7 @@ const ProfilePage = () => {
               cache: "no-store",
               headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${tokenData?.token}`
               },
             }
           );

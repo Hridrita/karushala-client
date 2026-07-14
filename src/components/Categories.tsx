@@ -1,4 +1,12 @@
 import Image from "next/image";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 type Category = {
   name: string;
@@ -13,19 +21,19 @@ const categories: Category[] = [
   { name: "Jewelry", image: "/assest/categories/jwel-1.jpg", href: "/assest/categories/jwel-1" },
   { name: "Textiles & Fabric", image: "/assest/categories/textile-1.jpg", href: "/assest/categories/textile-1" },
   { name: "Bags & Accessories", image: "/assest/categories/bag-1.jpg", href: "/assest/categories/bag-1" },
-  
+
   { name: "Art & Paintings", image: "/assest/categories/art-2.jpeg", href: "/assest/categories/art-2" },
   { name: "Home Decor", image: "/assest/categories/decor-2.jpeg", href: "/assest/categories/decor-2" },
   { name: "Pottery & Ceramics", image: "/assest/categories/pot-2.jpeg", href: "/assest/categories/pot-2" },
   { name: "Textiles & Fabric", image: "/assest/categories/textile-2.jpeg", href: "/assest/categories/textile-2" },
   { name: "Bags & Accessories", image: "/assest/categories/bag-2.jpg", href: "/assest/categories/bag-2" },
-  
+
   { name: "Jewelry", image: "/assest/categories/jwel-2.jpg", href: "/assest/categories/jwel-2" },
   { name: "Home Decor", image: "/assest/categories/decor-3.jpeg", href: "/assest/categories/decor-3" },
   { name: "Art & Paintings", image: "/assest/categories/art-3.jpeg", href: "/assest/categories/art-3" },
   { name: "Pottery & Ceramics", image: "/assest/categories/pot-3.jpeg", href: "/assest/categories/pot-3" },
   { name: "Bags & Accessories", image: "/assest/categories/bag-3.jpg", href: "/assest/categories/bag-3" },
-  
+
   { name: "Textiles & Fabric", image: "/assest/categories/textile-3.jpeg", href: "/assest/categories/textile-3" },
   { name: "Art & Paintings", image: "/assest/categories/art-4.jpeg", href: "/assest/categories/art-4" },
   { name: "Home Decor", image: "/assest/categories/decor-5.jpeg", href: "/assest/categories/decor-5" },
@@ -36,13 +44,16 @@ const marqueeCategories = [...categories, ...categories];
 
 export default function Categories() {
   return (
-    <section className="w-full bg-zinc-950 py-20 overflow-hidden">
+    <section className={`${fraunces.variable} w-full bg-zinc-950 py-20 overflow-hidden`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <span className="text-sm font-semibold uppercase tracking-widest text-[#887ad1]">
             Explore
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent">
+          <h2
+            style={{ fontFamily: "var(--font-fraunces)" }}
+            className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight bg-linear-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent"
+          >
             Shop by Category
           </h2>
           <p className="mt-3 text-zinc-400 max-w-xl mx-auto">
@@ -73,7 +84,10 @@ export default function Categories() {
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                <span className="text-lg font-bold text-zinc-100 group-hover:text-[#B8AEEA] transition-colors">
+                <span
+                  style={{ fontFamily: "var(--font-fraunces)" }}
+                  className="text-lg font-semibold text-zinc-100 group-hover:text-[#B8AEEA] transition-colors"
+                >
                   {cat.name}
                 </span>
               </div>

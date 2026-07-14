@@ -2,6 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Users, ShieldCheck, Map, HeartHandshake, Sparkles } from "lucide-react";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 // ইমপ্যাক্ট ডেটা স্ট্রাকচার
 const impactStats = [
@@ -67,21 +75,21 @@ const cardVariants = {
 
 export default function OurImpact() {
   return (
-    <section className="relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8">
+    <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8`}>
       {/* ===== ENHANCED BACKGROUND EFFECTS ===== */}
-      
+
       {/* Main Ambient Glow - Top Left */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[40rem] w-[40rem] rounded-full bg-[#4A4FCF]/15 blur-[180px] animate-pulse" />
-      
+
       {/* Main Ambient Glow - Bottom Right */}
       <div className="pointer-events-none absolute -bottom-40 -right-20 h-[35rem] w-[35rem] rounded-full bg-[#B8AEEA]/10 blur-[160px] animate-pulse [animation-delay:2s]" />
-      
+
       {/* Accent Glow - Top Right */}
       <div className="pointer-events-none absolute -top-20 right-1/4 h-[20rem] w-[20rem] rounded-full bg-purple-500/8 blur-[120px]" />
-      
+
       {/* Accent Glow - Bottom Left */}
       <div className="pointer-events-none absolute -bottom-20 left-1/4 h-[20rem] w-[20rem] rounded-full bg-emerald-500/6 blur-[120px]" />
-      
+
       {/* Floating Particles/Sparkles Effect */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 h-1 w-1 rounded-full bg-[#4A4FCF]/30 blur-[2px] animate-ping [animation-duration:3s]" />
@@ -90,7 +98,7 @@ export default function OurImpact() {
         <div className="absolute top-2/3 right-1/4 h-1.5 w-1.5 rounded-full bg-emerald-500/20 blur-[2px] animate-ping [animation-duration:4.5s] [animation-delay:1.5s]" />
         <div className="absolute top-1/2 left-1/2 h-2 w-2 rounded-full bg-[#4A4FCF]/10 blur-[3px] animate-pulse [animation-duration:5s]" />
       </div>
-      
+
       {/* Subtle Grid Pattern */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
 
@@ -106,9 +114,12 @@ export default function OurImpact() {
               Growing
             </span>
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h2
+            style={{ fontFamily: "var(--font-fraunces)" }}
+            className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
+          >
             Making an{" "}
-            <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#4A4FCF] via-[#887ad1] to-[#B8AEEA] bg-clip-text text-transparent italic">
               Impact That Matters
             </span>
           </h2>
@@ -140,7 +151,7 @@ export default function OurImpact() {
               >
                 {/* Decorative Background Glow per card */}
                 <div className={`absolute -right-10 -top-10 h-40 w-40 rounded-full ${stat.glowColor} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100`} />
-                
+
                 {/* Card Top Border Gradient (animated) */}
                 <div className="absolute top-0 left-0 h-0.5 w-0 bg-gradient-to-r from-[#4A4FCF] to-[#B8AEEA] transition-all duration-700 group-hover:w-full" />
 
@@ -153,7 +164,10 @@ export default function OurImpact() {
 
                 {/* Stats Text */}
                 <div className="mt-6 space-y-2 relative">
-                  <h3 className="text-4xl font-black tracking-tight text-white transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#B8AEEA]">
+                  <h3
+                    style={{ fontFamily: "var(--font-fraunces)" }}
+                    className="text-4xl font-semibold tracking-tight text-white transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#B8AEEA]"
+                  >
                     {stat.number}
                     {stat.id === 4 && <span className="text-lg text-emerald-400 ml-1">★</span>}
                   </h3>
@@ -167,7 +181,7 @@ export default function OurImpact() {
 
                 {/* Bottom Accent Line */}
                 <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#4A4FCF] to-[#B8AEEA] transition-all duration-500 group-hover:w-full" />
-                
+
                 {/* Card Number Badge (subtle) */}
                 <div className="absolute top-3 right-3 text-[8px] font-bold text-zinc-700/50 group-hover:text-zinc-600/50 transition-colors">
                   #{String(stat.id).padStart(2, '0')}

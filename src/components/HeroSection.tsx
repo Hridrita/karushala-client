@@ -5,6 +5,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { Fraunces } from "next/font/google";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
 
 const craftImages = [
   { src: "/assest/hero/Nakshi Kantha with women.jpg", alt: "Nakshi Kantha embroidery" },
@@ -48,7 +56,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-zinc-950 min-h-screen flex items-center">
+    <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 min-h-screen flex items-center`}>
       {/* ambient glow blobs */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-[#4A4FCF]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-20 h-[24rem] w-[24rem] rounded-full bg-[#B8AEEA]/15 blur-[110px]" />
@@ -70,10 +78,11 @@ export default function HeroSection() {
 
           <motion.h1
             variants={fadeUp}
-            className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+            style={{ fontFamily: "var(--font-fraunces)" }}
+            className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
             Handmade craft,{" "}
-            <span className="bg-gradient-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#4A4FCF] to-[#B8AEEA] bg-clip-text text-transparent italic">
               real hands.
             </span>
           </motion.h1>
@@ -102,15 +111,15 @@ export default function HeroSection() {
 
           <motion.div variants={fadeUp} className="flex gap-8 pt-4">
             <div>
-              <p className="text-2xl font-extrabold text-white">500+</p>
+              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">500+</p>
               <p className="text-xs text-zinc-500">Artisans</p>
             </div>
             <div>
-              <p className="text-2xl font-extrabold text-white">2,000+</p>
+              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">2,000+</p>
               <p className="text-xs text-zinc-500">Handmade Products</p>
             </div>
             <div>
-              <p className="text-2xl font-extrabold text-white">64</p>
+              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">64</p>
               <p className="text-xs text-zinc-500">Districts Covered</p>
             </div>
           </motion.div>
