@@ -15,6 +15,7 @@ import {
   CameraIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
 
 
 interface ProfileData {
@@ -134,6 +135,7 @@ const ProfilePage = () => {
           avatarUrl = data.avatarUrl;
         }
       }
+      const {data:tokenData} = await authClient.token()
 
       // Update profile
       const response = await fetch(
@@ -142,6 +144,7 @@ const ProfilePage = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify({
             email: user?.email,

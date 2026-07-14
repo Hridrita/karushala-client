@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
+
 interface Craft {
   _id: string;
   title: string;
@@ -26,8 +27,14 @@ const ManageCrafts = () => {
     if (!session?.user?.email) return;
 
     const fetchCrafts = async () => {
+      const { data: tokenData } = await authClient.token()
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/my-crafts?email=${session.user.email}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/my-crafts?email=${session.user.email}`,{
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
+          }
+        }
       );
       const data = await res.json();
       setCrafts(data);

@@ -1,4 +1,3 @@
-// src/app/dashboard/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -11,6 +10,7 @@ import SalesChart from "@/components/SalesChart";
 import RecentCrafts from "@/components/RecentCrafts";
 import QuickActions from "@/components/QuickActions";
 import ReviewsOverview from "@/components/ReviewsOverview";
+import { authClient } from "@/lib/auth-client";
 
 interface Craft {
   _id: string;
@@ -65,6 +65,8 @@ const ArtisanDashboard = () => {
       if (isAuthenticated && user?.email) {
         try {
           setLoading(true);
+
+          const {data:tokenData} = await authClient.token()
           
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/api/dashboard?email=${user.email}`,
@@ -72,6 +74,7 @@ const ArtisanDashboard = () => {
               cache: "no-store",
               headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${tokenData?.token}`
               },
             }
           );

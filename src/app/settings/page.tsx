@@ -18,6 +18,7 @@ import {
   KeyIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
 
 interface SettingsData {
   name: string;
@@ -63,12 +64,14 @@ const SettingsPage = () => {
     const fetchSettings = async () => {
       if (isAuthenticated && user?.email) {
         try {
+            const {data: tokenData} = await authClient.token()
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/api/settings?email=${user.email}`,
             {
               cache: "no-store",
               headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${tokenData?.token}`
               },
             }
           );
@@ -118,12 +121,14 @@ const SettingsPage = () => {
   const handleSave = async (section: string, data: any) => {
     setIsSaving(true);
     try {
+         const {data: tokenData} = await authClient.token()
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/settings`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify({
             email: user?.email,
@@ -292,9 +297,7 @@ const SettingsPage = () => {
 
 export default SettingsPage;
 
-// ============================================
-// Individual Settings Components
-// ============================================
+
 
 const ProfileSettings = ({ settings, onSave, isSaving }: any) => {
   const [form, setForm] = useState({
@@ -602,43 +605,29 @@ const SecuritySettings = ({ user, onSave, isSaving }: any) => {
   });
 
   const handlePasswordChange = async () => {
-    if (form.newPassword !== form.confirmPassword) {
-      toast.error("Passwords don't match");
-      return;
-    }
-    if (form.newPassword.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-    
-    try {
-      // Call the password change API
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/settings/password`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user?.email,
-            currentPassword: form.currentPassword,
-            newPassword: form.newPassword,
-          }),
-        }
-      );
+  if (form.newPassword !== form.confirmPassword) {
+    toast.error("Passwords don't match");
+    return;
+  }
+  if (form.newPassword.length < 6) {
+    toast.error("Password must be at least 6 characters");
+    return;
+  }
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to change password");
-      }
+  const { error } = await authClient.changePassword({
+    newPassword: form.newPassword,
+    currentPassword: form.currentPassword,
+    revokeOtherSessions: true,
+  });
 
-      toast.success("Password changed successfully! Please login again with your new password.");
-      setForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to change password");
-    }
-  };
+  if (error) {
+    toast.error(error.message || "Failed to change password");
+    return;
+  }
+
+  toast.success("Password changed! Login again if needed.");
+  setForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
+};
 
   return (
     <div>
