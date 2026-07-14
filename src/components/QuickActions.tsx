@@ -13,7 +13,7 @@ const QuickActions = () => {
     },
     {
       label: "My Crafts",
-      href: "/my-crafts",
+      href: "/manage-crafts",
       icon: ClipboardDocumentListIcon,
       color: "from-green-500 to-green-400",
     },

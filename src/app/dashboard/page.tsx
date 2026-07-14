@@ -42,10 +42,22 @@ const ArtisanDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+   const handleCraftDeleted = (deletedId: string) => {
+    if (!dashboardData) return;
+    
+    setDashboardData({
+      ...dashboardData,
+      totalCrafts: dashboardData.totalCrafts - 1,
+      recentCrafts: dashboardData.recentCrafts.filter(
+        (craft) => craft._id !== deletedId
+      ),
+    });
+  };
+
   useEffect(() => {
-    // Proxy middleware দিয়ে protect করা আছে, তবুও চেক রাখা ভালো
+   
     if (!isLoading && !isAuthenticated) {
-      router.push("/auth/auth_page"); // ← ঠিক করা হলো
+      router.push("/auth/auth_page"); 
       return;
     }
 
@@ -127,7 +139,7 @@ const ArtisanDashboard = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <div>
               <h1 className="text-3xl font-extrabold text-white">
-                Welcome back, {user?.name || "Artisan"}! 👋
+                Welcome back, {user?.name.toUpperCase() || "Artisan"}!
               </h1>
               <p className="text-zinc-400 mt-1">
                 Here's what's happening with your crafts
@@ -157,7 +169,7 @@ const ArtisanDashboard = () => {
                     <SalesChart data={dashboardData.salesData} />
                   )}
                   {dashboardData?.recentCrafts && (
-                    <RecentCrafts crafts={dashboardData.recentCrafts} />
+                    <RecentCrafts crafts={dashboardData.recentCrafts} onCraftDeleted={handleCraftDeleted} />
                   )}
                 </div>
 

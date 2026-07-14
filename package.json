@@ -12,6 +12,7 @@
     "@better-auth/mongo-adapter": "^1.6.23",
     "@gravity-ui/icons": "^2.20.0",
     "@gravity-ui/uikit": "^7.44.2",
+    "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.4.0",
     "better-auth": "^1.6.23",

@@ -28,7 +28,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
         labels: data.map((item) => item.month),
         datasets: [
           {
-            label: "Sales (৳)",
+            label: "Sales (Tk)",
             data: data.map((item) => item.sales),
             borderColor: "#4A4FCF",
             backgroundColor: "rgba(74, 79, 207, 0.1)",
@@ -69,7 +69,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
             ticks: {
               color: "#a1a1aa",
               callback: function (value) {
-                return "৳" + value;
+                return "Tk " + value;
               },
             },
           },
