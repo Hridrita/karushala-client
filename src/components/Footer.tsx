@@ -26,8 +26,8 @@ export default function Footer(): React.JSX.Element {
 
   const quickLinks: FooterLink[] = [
     { label: "Home", href: "/" },
-    { label: "Explore Crafts", href: "/explore" },
-    { label: "Add Craft", href: "/items/add" },
+    { label: "Explore Crafts", href: "/all-craft" },
+    { label: "Add Craft", href: "/add-craft" },
     { label: "Dashboard", href: "/dashboard" },
   ];
 
