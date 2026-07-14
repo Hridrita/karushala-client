@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Fraunces } from "next/font/google";
+import { isDemoUser } from "@/lib/demo-user";
+import { toast } from "sonner";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -15,7 +17,10 @@ const fraunces = Fraunces({
 });
 
 const craftImages = [
-  { src: "/assest/hero/Nakshi Kantha with women.jpg", alt: "Nakshi Kantha embroidery" },
+  {
+    src: "/assest/hero/Nakshi Kantha with women.jpg",
+    alt: "Nakshi Kantha embroidery",
+  },
   { src: "/assest/hero/pot.jpg", alt: "Handmade pottery" },
   { src: "/assest/hero/matir pots.jpg", alt: "Handmade pottery" },
   { src: "/assest/hero/jwellery.png", alt: "Handmade jewelry" },
@@ -46,8 +51,30 @@ const cardVariants = {
 export default function HeroSection() {
   const router = useRouter();
   const { data: session } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
 
   const handleBecomeArtisan = () => {
+    if (isDemo) {
+      toast.error(
+        "Demo users cannot add crafts. Please create your own account.",
+        {
+          duration: 4000,
+          style: {
+            background: "linear-gradient(135deg, #1a1a1a, #2d1b1b)",
+            color: "#ffd700",
+            border: "1px solid rgba(255, 215, 0, 0.3)",
+            boxShadow:
+              "0 8px 32px rgba(255, 215, 0, 0.1), inset 0 1px 0 rgba(255, 215, 0, 0.1)",
+            borderRadius: "12px",
+            padding: "14px 20px",
+            fontSize: "14px",
+            fontWeight: "500",
+          },
+        },
+      );
+      return;
+    }
+
     if (session?.user) {
       router.push("/add-craft");
     } else {
@@ -56,7 +83,9 @@ export default function HeroSection() {
   };
 
   return (
-    <section className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 min-h-screen flex items-center`}>
+    <section
+      className={`${fraunces.variable} relative overflow-hidden bg-zinc-950 min-h-screen flex items-center`}
+    >
       {/* ambient glow blobs */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-[#4A4FCF]/20 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-20 h-[24rem] w-[24rem] rounded-full bg-[#B8AEEA]/15 blur-[110px]" />
@@ -91,8 +120,8 @@ export default function HeroSection() {
             variants={fadeUp}
             className="max-w-lg text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
-            From nakshi kantha to bamboo craft, pottery to jewelry — handmade by local
-            artisans across Bangladesh, now just a click away.
+            From nakshi kantha to bamboo craft, pottery to jewelry — handmade by
+            local artisans across Bangladesh, now just a click away.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
@@ -111,15 +140,30 @@ export default function HeroSection() {
 
           <motion.div variants={fadeUp} className="flex gap-8 pt-4">
             <div>
-              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">500+</p>
+              <p
+                style={{ fontFamily: "var(--font-fraunces)" }}
+                className="text-2xl font-semibold text-white"
+              >
+                500+
+              </p>
               <p className="text-xs text-zinc-500">Artisans</p>
             </div>
             <div>
-              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">2,000+</p>
+              <p
+                style={{ fontFamily: "var(--font-fraunces)" }}
+                className="text-2xl font-semibold text-white"
+              >
+                2,000+
+              </p>
               <p className="text-xs text-zinc-500">Handmade Products</p>
             </div>
             <div>
-              <p style={{ fontFamily: "var(--font-fraunces)" }} className="text-2xl font-semibold text-white">64</p>
+              <p
+                style={{ fontFamily: "var(--font-fraunces)" }}
+                className="text-2xl font-semibold text-white"
+              >
+                64
+              </p>
               <p className="text-xs text-zinc-500">Districts Covered</p>
             </div>
           </motion.div>
