@@ -7,6 +7,7 @@ import { useState } from "react";
 import Categories from "@/components/Categories";
 import FAQ from "@/components/FAQ";
 import HeroSection from "@/components/HeroSection";
+import FeaturedCrafts from "@/components/FeaturedCrafts";
 
 export default function Home() {
   const { user } = useAuth();
@@ -59,6 +60,7 @@ export default function Home() {
       
       <HeroSection />
       <Categories />
+      <FeaturedCrafts></FeaturedCrafts>
       <FAQ />
     </div>
   );
