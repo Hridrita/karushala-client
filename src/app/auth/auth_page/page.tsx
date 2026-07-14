@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, ArrowRightToLine, Mail, Lock, User, Sparkles } from "lucide-react";
-import { FaGoogle, FaPalette, FaGem, FaShop } from "react-icons/fa6";
+import { FaPalette, FaGem, FaShop } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -205,6 +206,12 @@ const handleDemoLogin = async () => {
     }
   };
 
+  const handleGoogleSignIn = async() =>{
+    await authClient.signIn.social({
+      provider: "google"
+    })
+  }
+
   return (
     <div className="w-full max-w-[380px]">
       <div className="mb-8 text-center">
@@ -296,9 +303,7 @@ const handleDemoLogin = async () => {
       >
         <Sparkles size={16} className="text-[#4A4FCF] group-hover:animate-pulse" />
         <span>Try Demo Login</span>
-        <span className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">
-          (Auto-fill credentials)
-        </span>
+        
       </button>
 
       <div className="my-6 flex items-center gap-3">
@@ -309,9 +314,10 @@ const handleDemoLogin = async () => {
 
       <button
         type="button"
+        onClick={handleGoogleSignIn}
         className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950/40 py-2.5 text-sm font-medium text-zinc-300 transition-all hover:border-zinc-700 hover:bg-zinc-950 hover:text-white active:scale-[0.98]"
       >
-        <FaGoogle size={16} />
+        <FcGoogle size={16} />
         Google
       </button>
 

@@ -29,7 +29,7 @@ export default function Home() {
                     Demo Mode Active
                   </p>
                   <p className="text-xs text-yellow-300/70">
-                    You&apos;re viewing a demo. Some features like adding crafts, editing profile, and managing store are restricted.
+                    You&apos;re viewing a demo. Some features like adding crafts, editing profile, and managing crafts are restricted.
                   </p>
                 </div>
               </div>
