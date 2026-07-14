@@ -1,5 +1,7 @@
+// src/app/all-craft/[id]/page.tsx
 import CraftGallery from "@/components/CraftGallery";
 import ReviewsSection from "@/components/ReviewsSection";
+import ContactSellerButton from "@/components/ContactSellerButton";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,6 +17,11 @@ interface Craft {
   createdAt?: string;
   rating?: number;
   reviews?: { name: string; comment: string; rating: number }[];
+  sellerEmail?: string;
+  sellerPhone?: string;
+  sellerName?: string;
+  sellerAddress?: string;
+  sellerWebsite?: string;
 }
 
 interface PageProps {
@@ -78,9 +85,17 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
               {craft.description}
             </p>
 
-            <button className="mt-8 w-full rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-opacity hover:opacity-90 sm:w-auto sm:px-10">
-              Contact Seller
-            </button>
+            {/* Contact Seller Button - Updated */}
+            <ContactSellerButton 
+              sellerPhone={craft.sellerPhone}
+              sellerEmail={craft.sellerEmail}
+              sellerName={craft.sellerName || "Seller"}
+              craftTitle={craft.title}
+              craftId={craft._id}
+              sellerAddress={craft.sellerAddress}
+              sellerDistrict={craft.district}
+              sellerWebsite={craft.sellerWebsite}
+            />
           </div>
         </div>
 
@@ -118,7 +133,7 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
         </div>
 
         {/* Reviews */}
-        <ReviewsSection craftId={id} initialReviews={reviews}></ReviewsSection>
+        <ReviewsSection craftId={id} initialReviews={reviews} />
 
         {/* Related items */}
         {related.length > 0 && (
@@ -144,7 +159,7 @@ const CraftDetailsPage = async ({ params }: PageProps) => {
                       {r.title}
                     </h3>
                     <p className="mt-1 text-xs font-semibold text-[#B8AEEA]">
-                      ৳{r.price}
+                      Tk {r.price}
                     </p>
                   </div>
                 </Link>

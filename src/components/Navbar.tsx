@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { House, FolderPlus, Wallet } from "@gravity-ui/icons";
 import { LayoutDashboard, SquareLibrary } from "lucide-react";
 
+
 type NavItem = {
   label: string;
   href: string;
@@ -28,6 +29,7 @@ export default function Navbar() {
           { label: "Add Craft", href: "/add-craft", icon: FolderPlus },
           { label: "Manage Store", href: "/manage-crafts", icon: SquareLibrary },
           { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+          
         ]
       : []),
   ];
