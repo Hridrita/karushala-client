@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Eye, EyeOff, ArrowRightToLine, Mail, Lock, User } from "lucide-react";
+import { Eye, EyeOff, ArrowRightToLine, Mail, Lock, User, Sparkles } from "lucide-react";
 import { FaGoogle, FaPalette, FaGem, FaShop } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+
 
 const signInSchema = z.object({
   email: z.string().min(1, "Email required").email("Enter valid email"),
@@ -85,7 +86,7 @@ export default function AuthPage() {
   );
 }
 
-// ---------- Brand / image panel ----------
+
 function BrandPanel({ isSignUp, onSwitch }: { isSignUp: boolean; onSwitch: () => void }) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#4A4FCF] to-[#7c74d8]">
@@ -128,15 +129,51 @@ function SignInForm({ onSwitch }: { onSwitch: () => void }) {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const DEMO_CREDENTIALS = {
+    email: "demo@karushala.com",
+    password: "demopass123",
+  };
+
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
-    defaultValues: { rememberMe: false },
-  });
+    defaultValues: { rememberMe: false,
+    email: "demo@karushala.com",     
+      password: "demopass123",
+}});
+
+const handleDemoLogin = async () => {
+    setValue("email", DEMO_CREDENTIALS.email);
+    setValue("password", DEMO_CREDENTIALS.password);
+    
+    toast.info("Demo credentials loaded! Logging you in...");
+    
+    setTimeout(async () => {
+      try {
+        const { data, error } = await authClient.signIn.email({
+          email: DEMO_CREDENTIALS.email,
+          password: DEMO_CREDENTIALS.password,
+        });
+
+        if (data) {
+          toast.success("Welcome to Karushala Demo!");
+          router.push("/");
+        }
+
+        if (error) {
+          toast.error(error.message || "Demo login failed.");
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Something went wrong.");
+      }
+    }, 500);
+  };
 
   const onSubmit = async (formdata: SignInFormData) => {
     setIsSubmitting(true);
@@ -252,6 +289,18 @@ function SignInForm({ onSwitch }: { onSwitch: () => void }) {
         </button>
       </form>
 
+      <button
+        type="button"
+        onClick={handleDemoLogin}
+        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-[#4A4FCF]/30 bg-[#4A4FCF]/10 py-2.5 text-sm font-medium text-[#B8AEEA] transition-all hover:bg-[#4A4FCF]/20 hover:border-[#4A4FCF]/50 active:scale-[0.98] group"
+      >
+        <Sparkles size={16} className="text-[#4A4FCF] group-hover:animate-pulse" />
+        <span>Try Demo Login</span>
+        <span className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">
+          (Auto-fill credentials)
+        </span>
+      </button>
+
       <div className="my-6 flex items-center gap-3">
         <span className="h-px flex-1 bg-zinc-800/70" />
         <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">or continue with</span>
@@ -310,8 +359,7 @@ function SignUpForm({ onSwitch }: { onSwitch: () => void }) {
 
     reset();
     onSwitch();
-    // signin form e router.push("/") ache, eikhane nai — 
-    // check koro emailVerification required kina, na hole redirect add koro
+    
   } catch (err) {
     console.error(err);
     toast.error("Something went wrong. Please try again.");
