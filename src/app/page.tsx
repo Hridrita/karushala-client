@@ -8,6 +8,8 @@ import Categories from "@/components/Categories";
 import FAQ from "@/components/FAQ";
 import HeroSection from "@/components/HeroSection";
 import FeaturedCrafts from "@/components/FeaturedCrafts";
+import OurImpact from "@/components/OurImpact";
+import CustomerTestimonials from "@/components/CustomerTestimonials";
 
 export default function Home() {
   const { user } = useAuth();
@@ -61,6 +63,8 @@ export default function Home() {
       <HeroSection />
       <Categories />
       <FeaturedCrafts></FeaturedCrafts>
+      <OurImpact></OurImpact>
+      <CustomerTestimonials></CustomerTestimonials>
       <FAQ />
     </div>
   );
