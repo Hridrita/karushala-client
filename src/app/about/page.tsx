@@ -150,7 +150,7 @@ export default function AboutPage() {
               Explore Crafts
             </Link>
             <a
-              href="/auth/auth_page"
+              href="/add-craft"
               className="rounded-lg border border-zinc-700 px-6 py-2.5 text-sm font-bold text-zinc-200 hover:border-[#4A4FCF] transition-colors"
             >
               Become an Artisan
