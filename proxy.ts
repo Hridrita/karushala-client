@@ -5,6 +5,8 @@ const protectedRoutes = [
   "/dashboard",
   "/add-craft",
   "/manage-crafts",
+  "settings",
+  "/profile"
 ];
 
 // demo user ei route gulate dhukte parbe na (dashboard view kora allowed thakbe)
@@ -78,5 +80,7 @@ export const config = {
     "/add-craft",
     "/manage-crafts",
     "/manage-crafts/:path*",
+    "/settings",
+    "/profile"
   ],
 };

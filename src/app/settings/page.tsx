@@ -19,6 +19,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
 
 interface SettingsData {
   name: string;
@@ -49,6 +50,8 @@ interface SettingsData {
 const SettingsPage = () => {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { data: session } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
   const [settings, setSettings] = useState<SettingsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("profile");
@@ -61,8 +64,21 @@ const SettingsPage = () => {
       return;
     }
 
+    if (!isLoading && isAuthenticated && isDemo) {
+      toast.error("Demo users cannot access settings. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
+      router.push("/dashboard");
+      return;
+    }
+
     const fetchSettings = async () => {
-      if (isAuthenticated && user?.email) {
+      if (isAuthenticated && user?.email && !isDemo) {
         try {
             const {data: tokenData} = await authClient.token()
           const response = await fetch(
@@ -95,7 +111,7 @@ const SettingsPage = () => {
     };
 
     fetchSettings();
-  }, [user, isAuthenticated, isLoading, router]);
+  }, [user, isAuthenticated, isLoading, isDemo, router]);
 
   // Apply theme function
   const applyTheme = (theme: string) => {
@@ -167,7 +183,7 @@ const SettingsPage = () => {
     }
   };
 
-  if (isLoading || loading) {
+  if (isLoading || loading || isDemo) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#4A4FCF]"></div>

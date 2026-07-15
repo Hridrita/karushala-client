@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
 import { toast } from "sonner";
 
 const categories = [
@@ -77,7 +78,27 @@ async function uploadToImgbb(imageFile: File): Promise<string> {
 
 const AddCraftPage = () => {
   const router = useRouter();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
+
+  useEffect(() => {
+    if (isPending) return;
+    if (!session?.user) {
+      router.replace("/auth/auth_page");
+      return;
+    }
+    if (isDemo) {
+      toast.error("Demo users cannot add craft. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
+      router.replace("/dashboard");
+    }
+  }, [isPending, session, isDemo, router]);
 
   const {
     register,
@@ -186,6 +207,14 @@ const AddCraftPage = () => {
       setLoading(false);
     }
   };
+
+  if (isPending || !session?.user || isDemo) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-zinc-950">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#4A4FCF]" />
+      </div>
+    );
+  }
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-zinc-950 py-20">

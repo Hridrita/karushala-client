@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
+import { toast } from "sonner";
 
 
 interface Craft {
@@ -17,14 +20,35 @@ interface Craft {
 }
 
 const ManageCrafts = () => {
-  const { data: session } = authClient.useSession();
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
   const [crafts, setCrafts] = useState<Craft[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [targetCraft, setTargetCraft] = useState<Craft | null>(null);
 
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (isPending) return;
+    if (!session?.user) {
+      router.replace("/auth/auth_page");
+      return;
+    }
+    if (isDemo) {
+      toast.error("Demo users cannot access manage crafts. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
+      router.replace("/dashboard");
+    }
+  }, [isPending, session, isDemo, router]);
+
+  useEffect(() => {
+    if (!session?.user?.email || isDemo) return;
 
     const fetchCrafts = async () => {
       const { data: tokenData } = await authClient.token()
@@ -42,7 +66,7 @@ const ManageCrafts = () => {
     };
 
     fetchCrafts();
-  }, [session]);
+  }, [session, isDemo]);
 
   const confirmDelete = async () => {
     if (!targetCraft) return;
@@ -60,7 +84,7 @@ const ManageCrafts = () => {
     }
   };
 
-  if (loading) {
+  if (isPending || !session?.user || isDemo || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400">
         Loading...

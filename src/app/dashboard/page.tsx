@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +11,8 @@ import RecentCrafts from "@/components/RecentCrafts";
 import QuickActions from "@/components/QuickActions";
 import ReviewsOverview from "@/components/ReviewsOverview";
 import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
+import { toast } from "sonner";
 
 interface Craft {
   _id: string;
@@ -37,7 +39,10 @@ interface DashboardData {
 
 const ArtisanDashboard = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { data: session } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +64,17 @@ const ArtisanDashboard = () => {
     if (!isLoading && !isAuthenticated) {
       router.push("/auth/auth_page"); 
       return;
+    }
+
+    if (searchParams.get("demoRestricted") === "1") {
+      toast.error("Demo users cannot access that page. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
     }
 
     const fetchDashboardData = async () => {
@@ -98,7 +114,7 @@ const ArtisanDashboard = () => {
     };
 
     fetchDashboardData();
-  }, [user, isAuthenticated, isLoading, router]);
+  }, [user, isAuthenticated, isLoading, router, searchParams]);
 
   // Loading state
   if (isLoading || loading) {
@@ -148,13 +164,15 @@ const ArtisanDashboard = () => {
                 Here's what's happening with your crafts
               </p>
             </div>
-            <Link
-              href="/add-craft"
-              className="inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_30px_rgba(74,79,207,0.4)]"
-            >
-              <PlusCircleIcon className="h-5 w-5" />
-              Add New Craft
-            </Link>
+            {!isDemo && (
+              <Link
+                href="/add-craft"
+                className="inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-[#4A4FCF] to-[#887ad1] px-6 py-3 text-sm font-bold text-zinc-950 shadow-[0_4px_20px_rgba(74,79,207,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_30px_rgba(74,79,207,0.4)]"
+              >
+                <PlusCircleIcon className="h-5 w-5" />
+                Add New Craft
+              </Link>
+            )}
           </div>
 
           {dashboardData && (

@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
 
 
 interface ProfileData {
@@ -39,6 +40,8 @@ interface ProfileData {
 const ProfilePage = () => {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
+  const { data: session } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -60,9 +63,22 @@ const ProfilePage = () => {
       return;
     }
 
+    if (!isLoading && isAuthenticated && isDemo) {
+      toast.error("Demo users cannot access profile. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
+      router.push("/dashboard");
+      return;
+    }
+
     const fetchProfile = async () => {
       const {data:tokenData} = await authClient.token()
-      if (isAuthenticated && user?.email) {
+      if (isAuthenticated && user?.email && !isDemo) {
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/api/profile?email=${user.email}`,
@@ -99,7 +115,7 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, [user, isAuthenticated, isLoading, router]);
+  }, [user, isAuthenticated, isLoading, isDemo, router]);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -174,7 +190,7 @@ const ProfilePage = () => {
     }
   };
 
-  if (isLoading || loading) {
+  if (isLoading || loading || isDemo) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#4A4FCF]"></div>
