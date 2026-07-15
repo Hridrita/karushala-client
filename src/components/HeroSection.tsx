@@ -21,7 +21,7 @@ const craftImages = [
     src: "/assest/hero/Nakshi Kantha with women.jpg",
     alt: "Nakshi Kantha embroidery",
   },
-  { src: "/assest/hero/pot.jpg", alt: "Handmade pottery" },
+  { src: "/assest/hero/pot-1.jpg", alt: "Handmade pottery" },
   { src: "/assest/hero/matir pots.jpg", alt: "Handmade pottery" },
   { src: "/assest/hero/jwellery.png", alt: "Handmade jewelry" },
 ];
