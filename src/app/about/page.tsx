@@ -1,5 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { isDemoUser } from "@/lib/demo-user";
+import { toast } from "sonner";
+
 export default function AboutPage() {
+  const { data: session } = authClient.useSession();
+  const isDemo = isDemoUser(session?.user?.email);
+
+  const handleBecomeArtisanClick = (e: React.MouseEvent) => {
+    if (isDemo) {
+      e.preventDefault();
+      toast.error("Demo users cannot add craft. Please create your own account.", {
+        duration: 4000,
+        style: {
+          background: "#18181b",
+          color: "#fbbf24",
+          border: "1px solid #fbbf24/30",
+        },
+      });
+    }
+    // not logged in -> href already points to auth page below
+  };
+
   return (
     <main className="min-h-screen bg-zinc-950 px-4 sm:px-6 lg:px-8 py-20">
       <div className="mx-auto max-w-4xl">
@@ -149,12 +173,17 @@ export default function AboutPage() {
             >
               Explore Crafts
             </Link>
-            <a
-              href="/add-craft"
-              className="rounded-lg border border-zinc-700 px-6 py-2.5 text-sm font-bold text-zinc-200 hover:border-[#4A4FCF] transition-colors"
+            <Link
+              href={session?.user ? "/add-craft" : "/auth/auth_page"}
+              onClick={handleBecomeArtisanClick}
+              className={`rounded-lg border px-6 py-2.5 text-sm font-bold transition-colors ${
+                isDemo
+                  ? "border-zinc-800 text-zinc-600 cursor-not-allowed opacity-50"
+                  : "border-zinc-700 text-zinc-200 hover:border-[#4A4FCF]"
+              }`}
             >
               Become an Artisan
-            </a>
+            </Link>
           </div>
         </div>
       </div>
