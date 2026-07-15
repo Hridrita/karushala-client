@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -26,19 +26,19 @@ const craftImages = [
   { src: "/assest/hero/jwellery.png", alt: "Handmade jewelry" },
 ];
 
-const container = {
+const container:Variants = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.15, delayChildren: 0.3 },
   },
 };
 
-const fadeUp = {
+const fadeUp:Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-const cardVariants = {
+const cardVariants:Variants = {
   hidden: { opacity: 0, scale: 0.85, y: 40 },
   show: {
     opacity: 1,

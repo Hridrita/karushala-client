@@ -10,7 +10,6 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedCrafts from "@/components/FeaturedCrafts";
 import OurImpact from "@/components/OurImpact";
 import CustomerTestimonials from "@/components/CustomerTestimonials";
-import Newsletter from "@/components/Newsletter";
 import BehindTheCraft from "@/components/BehindTheCraft";
 import TheKarunshalaWay from "@/components/TheKarushalaWay";
 

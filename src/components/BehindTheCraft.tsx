@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Hammer, Award, MapPin, Sparkles, Clock, Users, Star } from "lucide-react";
 import { Fraunces } from "next/font/google";
 
@@ -88,7 +88,7 @@ const artisans = [
   },
 ];
 
-const containerVariants = {
+const containerVariants : Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -96,7 +96,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants : Variants = {
   hidden: { opacity: 0, y: 40, rotateX: 10 },
   show: {
     opacity: 1,

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Star, ArrowRight, ShoppingBag, Heart, Eye, MapPin } from "lucide-react";
 import { Fraunces } from "next/font/google";
 
@@ -24,7 +24,7 @@ interface Craft {
   stock?: number;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -32,7 +32,7 @@ const containerVariants = {
   },
 };
 
-const cardVariants = {
+const cardVariants:Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   show: {
     opacity: 1,

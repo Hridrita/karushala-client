@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Star, Quote, Sparkles, ArrowRight, Award, Heart } from "lucide-react";
 import { Fraunces } from "next/font/google";
 
@@ -20,7 +20,7 @@ interface Review {
   craftTitle?: string;
 }
 
-const containerVariants = {
+const containerVariants:Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -28,7 +28,7 @@ const containerVariants = {
   },
 };
 
-const cardVariants = {
+const cardVariants:Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   show: {
     opacity: 1,
