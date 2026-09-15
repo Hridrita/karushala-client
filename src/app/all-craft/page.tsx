@@ -27,7 +27,9 @@ const AllCraftsPage = () => {
 
   useEffect(() => {
     const fetchCrafts = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts`,
+      );
       const data: Craft[] = await res.json();
       setCrafts(data);
       setLoading(false);
@@ -36,12 +38,18 @@ const AllCraftsPage = () => {
   }, []);
 
   const categories = useMemo(
-    () => ["all", ...Array.from(new Set(crafts.map((c) => c.category).filter(Boolean)))],
+    () => [
+      "all",
+      ...Array.from(new Set(crafts.map((c) => c.category).filter(Boolean))),
+    ],
     [crafts],
   );
 
   const districts = useMemo(
-    () => ["all", ...Array.from(new Set(crafts.map((c) => c.district).filter(Boolean)))],
+    () => [
+      "all",
+      ...Array.from(new Set(crafts.map((c) => c.district).filter(Boolean))),
+    ],
     [crafts],
   );
 
@@ -180,6 +188,10 @@ const AllCraftsPage = () => {
                     src={craft.images?.[0] || "/placeholder.png"}
                     alt={craft.title}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    priority={filteredCrafts.indexOf(craft) < 8}
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjcyNzJhIi8+PC9zdmc+"
                     className="object-cover"
                   />
                 </div>
@@ -189,7 +201,9 @@ const AllCraftsPage = () => {
                     {craft.title}
                   </h3>
                   <p className="mt-1 text-xs text-zinc-400">
-                    {craft.rating ? `★ ${craft.rating.toFixed(1)}` : "No ratings yet"}
+                    {craft.rating
+                      ? `★ ${craft.rating.toFixed(1)}`
+                      : "No ratings yet"}
                   </p>
 
                   <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
