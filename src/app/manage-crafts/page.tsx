@@ -7,7 +7,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { isDemoUser } from "@/lib/demo-user";
 import { toast } from "sonner";
-
+import { Loader2 } from "lucide-react";
 
 interface Craft {
   _id: string;
@@ -35,14 +35,17 @@ const ManageCrafts = () => {
       return;
     }
     if (isDemo) {
-      toast.error("Demo users cannot access manage crafts. Please create your own account.", {
-        duration: 4000,
-        style: {
-          background: "#18181b",
-          color: "#fbbf24",
-          border: "1px solid #fbbf24/30",
+      toast.error(
+        "Demo users cannot access manage crafts. Please create your own account.",
+        {
+          duration: 4000,
+          style: {
+            background: "#18181b",
+            color: "#fbbf24",
+            border: "1px solid #fbbf24/30",
+          },
         },
-      });
+      );
       router.replace("/dashboard");
     }
   }, [isPending, session, isDemo, router]);
@@ -51,14 +54,15 @@ const ManageCrafts = () => {
     if (!session?.user?.email || isDemo) return;
 
     const fetchCrafts = async () => {
-      const { data: tokenData } = await authClient.token()
+      const { data: tokenData } = await authClient.token();
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/my-crafts?email=${session.user.email}`,{
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/crafts/my-crafts?email=${session.user.email}`,
+        {
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${tokenData?.token}`
-          }
-        }
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+        },
       );
       const data = await res.json();
       setCrafts(data);
@@ -86,8 +90,11 @@ const ManageCrafts = () => {
 
   if (isPending || !session?.user || isDemo || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400">
-        Loading...
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-zinc-950 text-zinc-400">
+        <Loader2 className="h-10 w-10 animate-spin text-[#4A4FCF]" />
+        <p className="text-sm font-medium text-zinc-400">
+          Loading your crafts...
+        </p>
       </div>
     );
   }
@@ -141,6 +148,9 @@ const ManageCrafts = () => {
                           alt={craft.title}
                           fill
                           className="object-cover"
+                          sizes="64px"
+                          placeholder="blur"
+                          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzI3MjcyYSIvPjwvc3ZnPg=="
                         />
                       </div>
                     </td>
@@ -167,7 +177,14 @@ const ManageCrafts = () => {
                           disabled={deletingId === craft._id}
                           className="rounded-lg border border-red-900/50 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-950/30 disabled:opacity-50"
                         >
-                          {deletingId === craft._id ? "..." : "Delete"}
+                          {deletingId === craft._id ? (
+                            <>
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                              Deleting...
+                            </>
+                          ) : (
+                            "Delete"
+                          )}
                         </button>
                       </div>
                     </td>
