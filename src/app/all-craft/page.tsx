@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 interface Craft {
   _id: string;
@@ -173,9 +174,14 @@ const AllCraftsPage = () => {
         </div>
 
         {loading ? (
-          <p className="text-center text-zinc-400">Loading...</p>
+          <div className="flex min-h-[300px] w-full flex-col items-center justify-center gap-3">
+            <Loader2 className="h-10 w-10 animate-spin text-[#4A4FCF]" />
+            <p className="text-sm font-medium text-zinc-400">
+              Loading crafts...
+            </p>
+          </div>
         ) : filteredCrafts.length === 0 ? (
-          <p className="text-center text-zinc-400">No crafts found.</p>
+          <p className="py-20 text-center text-zinc-400">No crafts found.</p>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {filteredCrafts.map((craft) => (
